@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Parque, Mi Voz, Mi Barrio | E-Portafolio Interactivo</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --radius: 16px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Navbar Flotante Glassmorphism */
+        header {
+            position: sticky;
+            top: 15px;
+            z-index: 1000;
+            padding: 0 20px;
+        }
+
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 99px;
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section Interactivo */
+        .hero {
+            max-width: 1100px;
+            margin: 40px auto 20px;
+            padding: 60px 30px;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            border-radius: 28px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(5, 150, 105, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            opacity: 0.9;
+            max-width: 750px;
+            margin: 0 auto 30px;
+        }
+
+        .stats-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            padding: 15px 25px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        /* Secciones */
+        .section {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+        }
+
+        /* Diagnóstico Interactivo / Árbol del problema */
+        .interactive-problems {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .problem-btn {
+            background: var(--card-bg);
+            border: 2px solid #e2e8f0;
+            padding: 20px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .problem-btn:hover, .problem-btn.active {
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+            transform: translateY(-3px);
+        }
+
+        .problem-btn.active {
+            background: #ecfdf5;
+        }
+
+        .problem-btn i {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .problem-btn h4 {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+
+        .problem-detail-box {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-top: 25px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary);
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Galería Interactiva con Filtros */
+        .filter-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 99px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-main);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .gallery-card:hover {
+            transform: scale(1.03);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .gallery-card-body {
+            padding: 15px;
+        }
+
+        .gallery-card-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            background: #d1fae5;
+            padding: 3px 10px;
+            border-radius: 99px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .gallery-card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        /* Pilares de la Propuesta / Accordion */
+        .pilares-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .pilar-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .pilar-icon {
+            width: 50px;
+            height: 50px;
+            background: #fef3c7;
+            color: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .pilar-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .pilar-btn {
+            margin-top: 20px;
+            background: none;
+            border: 2px solid var(--primary);
+            color: var(--primary-dark);
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pilar-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Modal visor de imágenes y detalles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-body {
+            background: white;
+            max-width: 800px;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .modal-img-container {
+            width: 100%;
+            max-height: 400px;
+            background: #000;
+        }
+
+        .modal-img-container img {
+            width: 100%;
+            height: 100%;
+            max-height: 400px;
+            object-fit: contain;
+        }
+
+        .modal-text {
+            padding: 30px;
+        }
+
+        .modal-text h3 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 20px 30px;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+
+        @media(max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Flotante -->
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fa-solid fa-tree"></i> Protecho-Topacio
+            </div>
+            <ul class="nav-links">
+                <li><a href="#diagnostico">Diagnóstico</a></li>
+                <li><a href="#galeria">Infancias</a></li>
+                <li><a href="#propuesta">Estrategias</a></li>
+                <li><a href="#creditos">Autores</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero / Portada -->
+    <div class="hero">
+        <h1>Mi Parque, Mi Voz, Mi Barrio</h1>
+        <p>Propuesta de Investigación-Acción Educativa Comunitaria enfocada en transformar los entornos de juego e interacción social de las infancias de la Comuna 8 de Ibagué.</p>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">2,500</div>
+                <div class="stat-label">Habitantes en el Sector</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">600</div>
+                <div class="stat-label">Viviendas (Estrato 2)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Pilares de Acción Educativa</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección 1: Diagnóstico Interactivo -->
+    <section class="section" id="diagnostico">
+        <h2 class="section-title"><i class="fa-solid fa-magnifying-glass-location"></i> Diagnóstico Interactivo del Territorio</h2>
+        <p class="section-desc">Haz clic en cada problemática identificada en la cartografía social para ver el análisis de la comunidad y la acción pedagógica formulada:</p>
+
+        <div class="interactive-problems">
+            <div class="problem-btn" onclick="showProblem('basuras', this)">
+                <i class="fa-solid fa-trash-can"></i>
+                <h4>Residuos y Cañadas</h4>
+                <small>Haz clic para ver detalle</small>
+            </div>
+            <div class="problem-btn" onclick="showProblem('inseguridad', this)">
+                <i class="fa-solid fa-shield-virus"></i>
+                <h4>Zonas de Miedo</h4>
+                <small>Haz clic para ver detalle</small>
+            </div>
+            <div class="problem-btn" onclick="showProblem('juego', this)">
+                <i class="fa-solid fa-child-reaching"></i>
+                <h4>Derecho al Juego</h4>
+                <small>Haz clic para ver detalle</small>
+            </div>
+        </div>
+
+        <div class="problem-detail-box" id="problem-detail">
+            <!-- JS Rellenará este detalle dinámicamente -->
+        </div>
+    </section>
+
+    <!-- Sección 2: Galería Filtrable de Voces e Infancias -->
+    <section class="section" id="galeria">
+        <h2 class="section-title"><i class="fa-solid fa-palette"></i> Galería de Evidencias e Infancias</h2>
+        <p class="section-desc">Explora el trabajo de campo, recorridos comunitarios y producciones gráficas de las niñas y niños:</p>
+
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterGallery('todos')">Todos</button>
+            <button class="filter-btn" onclick="filterGallery('recorrido')">Recorrido y Entorno</button>
+            <button class="filter-btn" onclick="filterGallery('comunidad')">Comunidad y Familias</button>
+            <button class="filter-btn" onclick="filterGallery('ninos')">Creaciones Infantiles</button>
+        </div>
+
+        <div class="gallery-grid" id="gallery-grid">
+            <!-- Rellenado por JS -->
+        </div>
+    </section>
+
+    <!-- Sección 3: Pilares de la Propuesta -->
+    <section class="section" id="propuesta">
+        <h2 class="section-title"><i class="fa-solid fa-lightbulb"></i> Pilares de la Propuesta Educativa</h2>
+        <p class="section-desc">Estrategias de mediación pedagógica diseñadas desde la educación popular y los derechos infantiles:</p>
+
+        <div class="pilares-grid">
+            <div class="pilar-card">
+                <div>
+                    <div class="pilar-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                    <h3>1. Cartografía Social Permanente</h3>
+                    <p>Mantiene el mapeo participativo como una práctica regular en la que los niños dibujan y registran activamente las transformaciones del parque.</p>
+                </div>
+                <button class="pilar-btn" onclick="openPilarModal(1)">Ver Simulación <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+
+            <div class="pilar-card">
+                <div>
+                    <div class="pilar-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <h3>2. El Parque como Aula Viva</h3>
+                    <p>Traslada los aprendizajes del aula de clases (ciencias, artes, ética) al espacio público, articulando la escuela con el parque.</p>
+                </div>
+                <button class="pilar-btn" onclick="openPilarModal(2)">Ver Simulación <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+
+            <div class="pilar-card">
+                <div>
+                    <div class="pilar-icon"><i class="fa-solid fa-people-holding-hands"></i></div>
+                    <h3>3. Mingas y Asambleas Infantiles</h3>
+                    <p>Jornadas comunitarias de siembra y embellecimiento precedidas por asambleas breves donde las decisiones de la niñez orientan las acciones.</p>
+                </div>
+                <button class="pilar-btn" onclick="openPilarModal(3)">Ver Simulación <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Emergente -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-body">
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-img-container" id="modal-img-wrap">
+                <img src="" id="modal-img" alt="Evidencia">
+            </div>
+            <div class="modal-text">
+                <span class="gallery-card-tag" id="modal-tag">Categoría</span>
+                <h3 id="modal-title">Título</h3>
+                <p id="modal-desc">Descripción detallada...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Créditos / Autores -->
+    <footer id="creditos">
+        <h3 style="margin-bottom: 10px;">Universidad Santo Tomás - Maestría en Infancias</h3>
+        <p>Espacio Académico: Infancias y Contextos Comunitarios | Mgtr. Eliana Paola Pulido Quintero</p>
+        <p><strong>Autores:</strong> Oscar Mosquera, Yesica Martínez y Valentina Hernández (Septiembre 2026)</p>
+    </footer>
+
+    <!-- JavaScript Lógica Interactiva -->
+    <script>
+        // Datos de las 12 Imágenes
+        const imagenesData = [
+            { id: 1, cat: 'recorrido', title: 'Recorrido Territorial', tag: 'Entorno', url: 'https://dufyasesorias.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-20-at-3.27.42-PM.jpeg', desc: 'Observación directa y reconocimiento del sector Protecho-Topacio por parte del equipo de investigación y la comunidad.' },
+            { id: 2, cat: 'recorrido', title: 'Espacios Comunitarios', tag: 'Entorno', url: 'https://dufyasesorias.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-20-at-3.27.41-PM.jpeg', desc: 'Reconocimiento de senderos y áreas verdes del sector próximos a la quebrada.' },
+            { id: 3, cat: 'recorrido', title: 'Puntos Críticos de Residuos', tag: 'Entorno', url: 'https://dufyasesorias.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-20-at-3.27.41-PM-5.jpeg', desc: 'Identificación de focos de basuras y acumulación que dificultan el juego libre.' },
+            { id: 4, cat: 'comunidad', title: 'Cartografía Social Participativa', tag: 'Comunidad', url: 'https://dufyasesorias.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-20-at-3.27.41-PM-4.jpeg', desc: 'Jóvenes y líderes trazando juntos el mapa del territorio y sus principales tensiones.' },
+            { id: 5, cat: 'comunidad', title: 'Muestra e Intercambio Escolar', tag: 'Comunidad', url: 'https://dufyasesorias.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-20-at-3.27.41-PM-3.jpeg', desc: 'Encuentro pedagógico y muestra de carteleras en los pasillos de la institución educativa.' },
+            { id: 6, cat: 'comunidad', title: 'Asamblea con Familias', tag: 'Comunidad', url: 'https://dufyasesorias.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-20-at-3.27.41-PM-1.jpeg', desc: 'Padres, madres y cuidadores participando activamente en la construcción del diagnóstico.' },
+            { id: 7, cat: 'ninos', title: 'Muestra de Lugares Entrañables', tag: 'Infancias', url: 'https://dufyasesorias.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-20-at-3.27.40-PM.jpeg', desc: 'Niñas y niños mostrando con orgullo sus creaciones gráficas sobre la naturaleza y la escuela.' },
+            { id: 8, cat: 'ninos', title: 'Trabajo Colaborativo Infantil', tag: 'Infancias', url: 'https://dufyasesorias.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-20-at-3.27.40-PM-3.jpeg', desc: 'Niñas y niños de preescolar trabajando en equipo expresando sus percepciones del barrio.' },
+            { id: 9, cat: 'ninos', title: 'Ficha Pedagógica "Mi Barrio"', tag: 'Infancias', url: 'https://dufyasesorias.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-20-at-3.27.40-PM-2.jpeg', desc: 'Evidencia donde expresan sensaciones como "huele feo" y "hay basuras en las calles".' },
+            { id: 10, cat: 'ninos', title: 'Expresión sobre Contaminación', tag: 'Infancias', url: 'https://dufyasesorias.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-20-at-3.27.40-PM-1.jpeg', desc: 'Dibujo y testimonio sobre personas fumando y deterioro en las calles.' },
+            { id: 11, cat: 'comunidad', title: 'Dinámicas en Espacio Público', tag: 'Comunidad', url: 'https://dufyasesorias.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-20-at-3.27.39-PM.jpeg', desc: 'Acompañamiento en actividades lúdicas y pedagógicas comunitarias.' },
+            { id: 12, cat: 'ninos', title: 'Gran Mapa de Preescolar', tag: 'Infancias', url: 'https://dufyasesorias.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-20-at-3.27.39-PM-1.jpeg', desc: 'Mapa gigante hecho en papel kraft por las niñas y niños de 4 a 5 años.' }
+        ];
+
+        // Diagnósticos Interactivos
+        const problemasData = {
+            basuras: {
+                titulo: "Acumulación de Residuos y Malos Olores",
+                impacto: "Genera malestar higiénico y limita las zonas donde los niños pueden correr y jugar sin riesgo de infección o cortes.",
+                solucion: "Articulación con programas de reciclaje escolar y jornadas de embellecimiento comunitario (Minga al Parque)."
+            },
+            inseguridad: {
+                titulo: "Zonas de Temor y Consumo de SPA",
+                impacto: "Esquinas oscuras y sectores poco transitados provocan temor en las familias, reduciendo el tiempo de esparcimiento al aire libre.",
+                solucion: "Transformación física del parque con murales de colores, mejoramiento de iluminación y constante apropiación comunitaria."
+            },
+            juego: {
+                titulo: "Deseo Vivo del Juego y la Naturaleza",
+                impacto: "A pesar del deterioro, las infancias conservan un interés vivo por la exploración, el deporte y la naturaleza.",
+                solucion: "Implementación del 'Aula Viva' para dar clases curriculares en el parque y asambleas infantiles periódicas."
+            }
+        };
+
+        // Renderizar Galería
+        function renderGallery(items) {
+            const container = document.getElementById('gallery-grid');
+            container.innerHTML = '';
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'gallery-card';
+                card.onclick = () => openImageModal(item);
+                card.innerHTML = `
+                    <img src="${item.url}" alt="${item.title}">
+                    <div class="gallery-card-body">
+                        <span class="gallery-card-tag">${item.tag}</span>
+                        <div class="gallery-card-title">${item.title}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Filtrar Galería
+        function filterGallery(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (category === 'todos') {
+                renderGallery(imagenesData);
+            } else {
+                const filtered = imagenesData.filter(img => img.cat === category);
+                renderGallery(filtered);
+            }
+        }
+
+        // Mostrar Problema Seleccionado
+        function showProblem(type, element) {
+            document.querySelectorAll('.problem-btn').forEach(b => b.classList.remove('active'));
+            element.classList.add('active');
+
+            const box = document.getElementById('problem-detail');
+            const data = problemasData[type];
+            box.style.display = 'block';
+            box.innerHTML = `
+                <h3 style="color: var(--primary-dark); margin-bottom: 8px;">${data.titulo}</h3>
+                <p><strong>Impacto en la Niñez:</strong> ${data.impacto}</p>
+                <p style="margin-top: 8px;"><strong>Acción de Respuesta Pedagógica:</strong> ${data.solucion}</p>
+            `;
+        }
+
+        // Modal de Imágenes
+        function openImageModal(item) {
+            document.getElementById('modal-img-wrap').style.display = 'block';
+            document.getElementById('modal-img').src = item.url;
+            document.getElementById('modal-tag').innerText = item.tag;
+            document.getElementById('modal-title').innerText = item.title;
+            document.getElementById('modal-desc').innerText = item.desc;
+            document.getElementById('modal-overlay').style.display = 'flex';
+        }
+
+        // Modal de Pilares
+        function openPilarModal(num) {
+            document.getElementById('modal-img-wrap').style.display = 'none';
+            const overlay = document.getElementById('modal-overlay');
+            const tag = document.getElementById('modal-tag');
+            const title = document.getElementById('modal-title');
+            const desc = document.getElementById('modal-desc');
+
+            tag.innerText = "Simulación de Implementación";
+
+            if (num === 1) {
+                title.innerText = "Pilar 1: Cartografía Social Permanente";
+                desc.innerText = "Fase 1: Sensibilización con docentes y JAC. Fase 2: Elaboración mensual de mapas interactivos donde los niños registran los avances. Fase 3: Evaluación de espacios recuperados mediante círculos de conversación.";
+            } else if (num === 2) {
+                title.innerText = "Pilar 2: El Parque como Aula Viva";
+                desc.innerText = "Involucra desarrollar asignaturas como Ciencias Naturales (observación de flora/fauna) y Ciudadanía directamente en el parque. Se articula con las iniciativas de PROCEDA y proyectos ambientales comunitarios.";
+            } else if (num === 3) {
+                title.innerText = "Pilar 3: Mingas y Asambleas Infantiles";
+                desc.innerText = "Desarrollo de jornadas colectivas de aseo y pintura de murales con reciclaje. Antes de cada jornada se realiza una asamblea de 15 minutos donde niñas y niños votan qué colores o temas plasmar.";
+            }
+
+            overlay.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').style.display = 'none';
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGallery(imagenesData);
+        });
+    </script>
+</body>
+</html>
